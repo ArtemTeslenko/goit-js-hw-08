@@ -6,15 +6,15 @@ const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
 player.on('timeupdate', throttle(obtainCurrTime, 1000));
+player.on('play', onPlayClick);
 
 function obtainCurrTime() {
-  player.getCurrentTime().then(time => {
+  player.getCurrentTime().then(function (time) {
     localStorage.setItem(CURRENT_TIME, time);
-    console.log(localStorage.getItem(CURRENT_TIME));
-    // console.log(time);
-    // console.log(typeof time);
   });
 }
 
-//JSON.stringify
-//JSON.parse
+function onPlayClick() {
+  let currentTime = Number(localStorage.getItem(CURRENT_TIME));
+  player.setCurrentTime(currentTime).then(function () {});
+}
